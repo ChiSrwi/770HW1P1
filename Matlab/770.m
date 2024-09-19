@@ -1,5 +1,5 @@
 clear
-dat = dlmread('/Users/tonyqisirui/Downloads/51_50.txt');
+dat = dlmread('/Users/tonyqisirui/Downloads/51_50_2.txt');
 t = dat(:,1);
 x = dat(:,2);
 y = dat(:,3);

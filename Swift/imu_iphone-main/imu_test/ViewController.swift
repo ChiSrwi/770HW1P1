@@ -83,8 +83,6 @@ class ViewController: UIViewController, ChartViewDelegate {
             let centeredMagnitude = magnitudeValues.map { $0 - magnitudeMean }
             
             let filteredMagnitude = filtfilt(data: centeredMagnitude, b: b, a: a)
-            
-            
             let smoothedMagnitude = movMean(data: filteredMagnitude, windowSize: windowSize)
             
             let (peaks, _) = findPeaks(data: smoothedMagnitude, minPeakHeight: minPeakHeight, minPeakDistance: minPeakDistance)
@@ -210,13 +208,14 @@ class ViewController: UIViewController, ChartViewDelegate {
     
     func movMean(data: [Double], windowSize: Int) -> [Double] {
         var meanData: [Double] = []
-            for i in 0..<data.count {
+        let halfwindow = windowSize / 2
+        for i in 0..<data.count {
 //                let start = max(0, i - windowSize + 1)
 //                let end = i + 1
-                let start = max(0, i - windowSize / 2)
-                let end = min(data.count - 1, i + windowSize / 2)
+                let start = max(0, i - halfwindow)
+                let end = min(data.count - 1, i + halfwindow)
                 
-                let window = Array(data[start..<end])
+                let window = Array(data[start...end])
                 let mean = window.reduce(0, +) / Double(window.count)
                 meanData.append(mean)
             }
